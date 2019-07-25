@@ -21,6 +21,15 @@ def create_table(connect):
         	"lat"	REAL NOT NULL,
         	"lon"	REAL NOT NULL
         );"""
+    cursor = connect.cursor()
+    cursor.execute(sql)
+    connect.commit()
+
+def get_date(path):
+    json_file = open(path, "r")
+    data = json.load(json_file)
+    json_file.close()
+    return data
 
 if __name__ == "__main__":
     if len(sys.argv) > 2:
@@ -28,6 +37,8 @@ if __name__ == "__main__":
         create_db(path)
         connection = get_connect(path)
         create_table(connection)
+        data = get_date("city.list.json")
+        print(data[0])
         print("OK")
     else:
         print("Not arguments")
